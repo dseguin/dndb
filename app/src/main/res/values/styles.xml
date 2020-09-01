@@ -1,0 +1,10 @@
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">#AAA</item>
+        <item name="colorPrimaryDark">#222</item>
+        <item name="colorAccent">#D44</item>
+    </style>
+    <style name="left_spinner_style">
+        <item name="android:background">@drawable/left_spinner_arrow</item>
+    </style>
+</resources>
