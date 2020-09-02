@@ -93,8 +93,9 @@ public class SpellsListFragment extends Fragment {
         });
         sortDialog.setPositiveButton(R.string.general_button_sort, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
+                boolean reverseOrder = ((CheckBox)sortPopup.findViewById(R.id.spellsort_descending_checkbox)).isChecked();
                 String sortitem = (String)((Spinner)sortPopup.findViewById(R.id.spellsort_spinner)).getSelectedItem();
-                sortSpellsBy(sortitem);
+                sortSpellsBy(sortitem, reverseOrder);
             }
         });
         return sortDialog;
@@ -112,8 +113,8 @@ public class SpellsListFragment extends Fragment {
         return ret;
     }
 
-    private void sortSpellsBy(String constraint) {
-        Collections.sort(spells, new SpellSortComparator(constraint));
+    private void sortSpellsBy(String constraint, boolean reverseOrder) {
+        Collections.sort(spells, new SpellSortComparator(constraint, reverseOrder));
         adapter.setSpells(spells);
         adapter.notifyDataSetChanged();
     }

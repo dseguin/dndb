@@ -77,4 +77,5 @@
         Source Code : <a href="https://github.com/dseguin/dndb">GitHub</a>\n
         License : <a href="https://opensource.org/licenses/MIT">MIT</a>
     </string>
+    <string name="label_spell_sort_descending">Sort in descending order</string>
 </resources>
