@@ -79,4 +79,7 @@
     </string>
     <string name="label_spell_sort_descending">Sort in descending order</string>
     <string name="label_spell_filter_exclude">Exclude selected components</string>
+    <string name="label_settings_header">Settings</string>
+    <string name="label_settings_import_source">Import Source</string>
+    <string name="label_settings_import_source_desc">Loads a sourcebook package and adds it to the current database.</string>
 </resources>

@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-
 import ca.printf.dndb.R;
 import com.google.android.material.navigation.NavigationView;
 
@@ -65,7 +64,10 @@ public class RootActivity extends AppCompatActivity
     private boolean menuAction(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_spells :
-                openFragSpells();
+                openContentFragment(new SpellsListFragment());
+                break;
+            case R.id.menu_settings :
+                openContentFragment(new SettingsFragment());
                 break;
             case R.id.menu_about :
                 createAboutDialog().show();
@@ -86,12 +88,12 @@ public class RootActivity extends AppCompatActivity
         return about.create();
     }
 
-    private void openFragSpells() {
+    private void openContentFragment(Fragment contentFrag) {
         ((FrameLayout)findViewById(R.id.content_frame)).removeAllViewsInLayout();
-        content_frag = new SpellsListFragment();
+        content_frag = contentFrag;
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content_frame, content_frag, FRAG_SPELLS_LIST)
+                .replace(R.id.content_frame, content_frag)
                 .addToBackStack(null)
                 .commit();
         if(drw.isDrawerOpen(GravityCompat.START))
