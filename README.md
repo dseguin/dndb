@@ -11,3 +11,5 @@ License
 Source code specific to D&DB is released under the MIT License.
 
 This software was developed using Google's Android Studio, which is based on IntelliJ IDEA Community Edition, and released under the Apache v2 License. The software makes use of the Android SDK, which is subject to [the Android SDK terms and conditions](https://developer.android.com/studio/terms).
+
+Other than the base libraries provided by the Android SDK and JDK, all code is original.
