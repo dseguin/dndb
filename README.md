@@ -5,7 +5,7 @@ D&DB
 
 Android app and database for searching and displaying data for Dungeons & Dragons (5e).
 
-Pre-built binaries available in the [releases tab](https://github.com/dseguin/dndb/releases/latest), or download the [latest release directly](https://github.com/dseguin/dndb/releases/download/v0.1.1/dndb-androidapi19-0.1.1.apk).
+Pre-built binaries available in the [releases tab](https://github.com/dseguin/dndb/releases/latest), or download the [latest release directly](https://github.com/dseguin/dndb/releases/download/v0.1.2/dndb-androidapi19-0.1.2.apk).
 
 Spells
 ------
