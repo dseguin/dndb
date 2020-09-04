@@ -76,6 +76,8 @@ public class Spell implements Serializable {
     public static final String QUERY_CONDITION_OPTIONS = QUERY_ATTR_OPTIONS(COL_CONDITION, DndbSQLManager.TABLE_CONDITION);
     public static final String QUERY_SOURCE_OPTIONS = QUERY_ATTR_OPTIONS(COL_SOURCE_SHORTNAME, DndbSQLManager.TABLE_SOURCE);
     public static final String QUERY_CLASS_OPTIONS = QUERY_ATTR_OPTIONS(COL_CLASS, DndbSQLManager.TABLE_CLASS_LIST);
+    // Get spell count
+    public static final String QUERY_SPELL_COUNT = "SELECT COUNT(" + COL_ID + ") FROM " + DndbSQLManager.TABLE_SPELL + ";";
     // Instance vars
     private long id;
     private String name;

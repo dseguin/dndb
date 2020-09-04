@@ -9,15 +9,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import ca.printf.dndb.R;
@@ -29,6 +34,7 @@ import ca.printf.dndb.list.SpellSortComparator;
 import ca.printf.dndb.list.SpellSortSpinner;
 
 public class SpellsListFragment extends Fragment {
+    private static final String SPELL_CACHE = "spell_cache";
     private ArrayList<Spell> spells;
     private DndbSQLManager dbman;
     private SpellListManager adapter;
@@ -44,10 +50,24 @@ public class SpellsListFragment extends Fragment {
         dbman = new DndbSQLManager(getContext());
         initSpells();
         try {
+            if(loadSpellCache()) {
+                Log.d("loadSpellCache", "Spell cache successfully loaded");
+                return;
+            }
+        } catch (Exception e) {
+            Log.e("loadSpellCache", "Error while reading spell cache", e);
+        }
+        try {
             readSpellsFromDB();
         } catch (Exception e) {
             ErrorFragment.errorScreen(getActivity().getSupportFragmentManager(),
                     "readSpellsFromDB: Error reading spells from database", e);
+        }
+        try {
+            if(saveSpellCache())
+                Log.d("saveSpellCache", "Spell cache was written successfully");
+        } catch (Exception e) {
+            Log.e("saveSpellCache", "Error while writing to spell cache", e);
         }
     }
 
@@ -57,8 +77,8 @@ public class SpellsListFragment extends Fragment {
         ListView list = root.findViewById(R.id.spells_listview);
         list.setAdapter(adapter);
         list.setOnItemClickListener(spellSelection);
-        ((Button)root.findViewById(R.id.spells_btn_filter_spells)).setOnClickListener(filterButton);
-        ((Button)root.findViewById(R.id.spells_btn_sort_spells)).setOnClickListener(sortButton);
+        root.findViewById(R.id.spells_btn_filter_spells).setOnClickListener(filterButton);
+        root.findViewById(R.id.spells_btn_sort_spells).setOnClickListener(sortButton);
         return root;
     }
 
@@ -440,5 +460,64 @@ public class SpellsListFragment extends Fragment {
 
     private String stripTableFromCol(String col) {
         return col.substring(col.lastIndexOf('.') + 1);
+    }
+
+    private File getSpellCache() throws IOException {
+        File dir = getActivity().getCacheDir();
+        if(dir == null)
+            throw new IOException("getCacheDir(): Could not get file handler to cache directory");
+        File f = new File(dir.getPath() + File.separator + SPELL_CACHE);
+        if(f.createNewFile())
+            Log.d("getSpellCache", "Cache file \"" + SPELL_CACHE + "\" does not exist. Creating...");
+        return f;
+    }
+
+    private boolean saveSpellCache() throws IOException {
+        File f = getSpellCache();
+        if(f.delete() && f.createNewFile()) {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f));
+            for(Spell s : spells)
+                oos.writeObject(s);
+            oos.close();
+        } else {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean loadSpellCache() throws IOException {
+        ArrayList<Spell> tmp = new ArrayList<>();
+        File f = getSpellCache();
+        if(f.length() == 0)
+            return false;
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
+        while(ois.available() != -1) {
+            try {
+                tmp.add((Spell)ois.readObject());
+            } catch (ClassNotFoundException e) {
+                ois.close();
+                return false;
+            } catch (EOFException e) {
+                break;
+            }
+        }
+        ois.close();
+        if(tmp.size() != getDBSpellCount())
+            return false;
+        spells = tmp;
+        return true;
+    }
+
+    private int getDBSpellCount() {
+        int ret = 0;
+        SQLiteDatabase db = dbman.getReadableDatabase();
+        Cursor res = db.rawQuery(Spell.QUERY_SPELL_COUNT, null);
+        if(res.getCount() != 0) {
+            res.moveToFirst();
+            ret = res.getInt(0);
+        }
+        res.close();
+        db.close();
+        return ret;
     }
 }

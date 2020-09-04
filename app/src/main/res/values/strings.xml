@@ -72,10 +72,18 @@
     <string name="label_spell_sort">Sort by :</string>
     <string name="general_button_sort">Sort</string>
     <string name="label_spell_sort_header">Sort Spells</string>
-    <string name="about_text">&appname;, created by <a href="https://github.com/dseguin">David Seguin</a>\n\n
+    <string name="about_text">&appname; is an application for browsing data from
+        the 5th edition ruleset of Dungeons &amp; Dragons.\n\n
+        Author : <a href="https://github.com/dseguin">David Seguin</a>\n
         App Version : &appversion;\n
         Source Code : <a href="https://github.com/dseguin/dndb">GitHub</a>\n
-        License : <a href="https://opensource.org/licenses/MIT">MIT</a>
+        License : <a href="https://github.com/dseguin/dndb/blob/stable/LICENSE">MIT</a>\n\n
+        Material included comes from the
+        <a href="https://dnd.wizards.com/articles/features/systems-reference-document-srd">Wizards of the Coast SRD</a>
+        and other sources released under the
+        <a href="https://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf">Open Game License</a>.\n\n
+        The \"dragon ampersand\" is a <a href="https://dnd.wizards.com/pressassets">press asset</a>
+        provided by Wizards of the Coast.
     </string>
     <string name="label_spell_sort_descending">Sort in descending order</string>
     <string name="label_spell_filter_exclude">Exclude selected components</string>

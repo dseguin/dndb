@@ -15,6 +15,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="10dp"
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
@@ -49,6 +50,7 @@
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="10dp"
         android:columnCount="2">
         <LinearLayout
             android:layout_width="200dp"
