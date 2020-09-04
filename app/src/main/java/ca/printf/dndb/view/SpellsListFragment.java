@@ -93,8 +93,9 @@ public class SpellsListFragment extends Fragment {
         });
         sortDialog.setPositiveButton(R.string.general_button_sort, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
+                boolean reverseOrder = ((CheckBox)sortPopup.findViewById(R.id.spellsort_descending_checkbox)).isChecked();
                 String sortitem = (String)((Spinner)sortPopup.findViewById(R.id.spellsort_spinner)).getSelectedItem();
-                sortSpellsBy(sortitem);
+                sortSpellsBy(sortitem, reverseOrder);
             }
         });
         return sortDialog;
@@ -112,8 +113,8 @@ public class SpellsListFragment extends Fragment {
         return ret;
     }
 
-    private void sortSpellsBy(String constraint) {
-        Collections.sort(spells, new SpellSortComparator(constraint));
+    private void sortSpellsBy(String constraint, boolean reverseOrder) {
+        Collections.sort(spells, new SpellSortComparator(constraint, reverseOrder));
         adapter.setSpells(spells);
         adapter.notifyDataSetChanged();
     }
@@ -218,6 +219,7 @@ public class SpellsListFragment extends Fragment {
             boolean verbal = ((CheckBox)filterPopup.findViewById(R.id.spellfilter_verbal_checkbox)).isChecked();
             boolean somatic = ((CheckBox)filterPopup.findViewById(R.id.spellfilter_somatic_checkbox)).isChecked();
             boolean material = ((CheckBox)filterPopup.findViewById(R.id.spellfilter_material_checkbox)).isChecked();
+            boolean exclude_comps = ((CheckBox)filterPopup.findViewById(R.id.spellfilter_exclude_component)).isChecked();
             tmpnum = ((EditText)filterPopup.findViewById(R.id.spellfilter_material_mincost)).getText().toString();
             int mincost = -1;
             if(tmpnum != null && !tmpnum.trim().isEmpty())
@@ -252,58 +254,72 @@ public class SpellsListFragment extends Fragment {
                     continue;
                 if(!target.contains(getString(R.string.label_spell_filter_target))) {
                     boolean found = false;
-                    for(String t : s.getTargets())
-                        found = target.equals(t);
+                    for(String t : s.getTargets()) {
+                        if(found = target.equals(t))
+                            break;
+                    }
                     if(!found)
                         continue;
                 }
                 if(!save.contains(getString(R.string.label_spell_filter_ability))) {
                     boolean found = false;
-                    for(String t : s.getAbilitySaves())
-                        found = save.equals(t);
+                    for(String t : s.getAbilitySaves()) {
+                        if(found = save.equals(t))
+                            break;
+                    }
                     if(!found)
                         continue;
                 }
                 if(!atktype.contains(getString(R.string.label_spell_filter_atktype))) {
                     boolean found = false;
-                    for(String t : s.getAtkTypes())
-                        found = atktype.equals(t);
+                    for(String t : s.getAtkTypes()) {
+                        if(found = atktype.equals(t))
+                            break;
+                    }
                     if(!found)
                         continue;
                 }
                 if(!dmgtype.contains(getString(R.string.label_spell_filter_dmgtype))) {
                     boolean found = false;
-                    for(String t : s.getDmgTypes())
-                        found = dmgtype.equals(t);
+                    for(String t : s.getDmgTypes()) {
+                        if(found = dmgtype.equals(t))
+                            break;
+                    }
                     if(!found)
                         continue;
                 }
                 if(!condition.contains(getString(R.string.label_spell_filter_condition))) {
                     boolean found = false;
-                    for(String t : s.getConditions())
-                        found = condition.equals(t);
+                    for(String t : s.getConditions()) {
+                        if(found = condition.equals(t))
+                            break;
+                    }
                     if(!found)
                         continue;
                 }
                 if(!source.contains(getString(R.string.label_spell_filter_source))) {
                     boolean found = false;
-                    for(String t : s.getSources())
-                        found = source.equals(t);
+                    for(String t : s.getSources().keySet()) {
+                        if(found = source.equals(t))
+                            break;
+                    }
                     if(!found)
                         continue;
                 }
                 if(!spellclass.contains(getString(R.string.label_spell_filter_class))) {
                     boolean found = false;
-                    for(String t : s.getClasses())
-                        found = spellclass.equals(t);
+                    for(String t : s.getClasses()) {
+                        if(found = spellclass.equals(t))
+                            break;
+                    }
                     if(!found)
                         continue;
                 }
-                if(verbal && !s.isVerbal())
+                if(verbal && ((!s.isVerbal() && !exclude_comps) || (s.isVerbal() && exclude_comps)))
                     continue;
-                if(somatic && !s.isSomatic())
+                if(somatic && ((!s.isSomatic() && !exclude_comps) || (s.isSomatic() && exclude_comps)))
                     continue;
-                if(material && !s.isMaterial())
+                if(material && ((!s.isMaterial() && !exclude_comps) || (s.isMaterial() && exclude_comps)))
                     continue;
                 if(mincost > -1 && (!s.isMaterial() || s.getMaterialsCost() < mincost))
                     continue;
@@ -313,7 +329,6 @@ public class SpellsListFragment extends Fragment {
                     continue;
                 spellsFiltered.add(s);
             }
-            Log.d("DEBUG", "FILTERED SEARCH");
             spells = spellsFiltered;
             adapter.setSpells(spells);
             adapter.notifyDataSetChanged();
@@ -331,15 +346,20 @@ public class SpellsListFragment extends Fragment {
     }
 
     private void insertDefaultSpells() {
+        insertSpellsFromResource(R.raw.srd);
+        insertSpellsFromResource(R.raw.ee);
+    }
+
+    private void insertSpellsFromResource(int rawResourceId) {
         SQLiteDatabase db = dbman.getWritableDatabase();
-        InputStream zip = getResources().openRawResource(R.raw.srd);
+        InputStream zip = getResources().openRawResource(rawResourceId);
         try {
             dbman.execZipPackage(db, zip);
         } catch (IOException e) {
             db.close();
-            Log.e("initSpells", "Error processing stream R.raw.srd", e);
+            Log.e("initSpells", "Error processing stream " + getResources().getResourceName(rawResourceId), e);
             ErrorFragment.errorScreen(getActivity().getSupportFragmentManager(),
-                    "initSpells: Error processing stream R.raw.srd", e);
+                    "initSpells: Error processing stream " + getResources().getResourceName(rawResourceId), e);
         }
         db.close();
     }
@@ -407,8 +427,10 @@ public class SpellsListFragment extends Fragment {
             s.getConditions().add(row.getString(row.getColumnIndex(stripTableFromCol(Spell.COL_CONDITION))));
         row.close();
         row = db.rawQuery(Spell.querySource(s.getName()), null);
-        while(row.moveToNext())
-            s.getSources().add(row.getString(row.getColumnIndex(stripTableFromCol(Spell.COL_SOURCE_SHORTNAME))));
+        while(row.moveToNext()) {
+            s.getSources().put(row.getString(row.getColumnIndex(stripTableFromCol(Spell.COL_SOURCE_SHORTNAME))),
+                    row.getString(row.getColumnIndex(stripTableFromCol(Spell.COL_SOURCE_FULLNAME))));
+        }
         row.close();
         row = db.rawQuery(Spell.queryClass(s.getName()), null);
         while(row.moveToNext())

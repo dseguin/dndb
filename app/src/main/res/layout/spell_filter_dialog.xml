@@ -77,11 +77,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:labelFor="@+id/spellfilter_level_spinner"
                 android:text="@string/label_spell_filter_level"/>
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:paddingLeft="30dp"
                 android:paddingVertical="2dp"
                 style="@style/left_spinner_style"
@@ -89,11 +91,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:labelFor="@+id/spellfilter_school_spinner"
                 android:text="@string/label_spell_filter_school"/>
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:paddingLeft="30dp"
                 android:paddingVertical="2dp"
                 style="@style/left_spinner_style"
@@ -101,11 +105,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:labelFor="@+id/spellfilter_duration_spinner"
                 android:text="@string/label_spell_filter_duration"/>
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:paddingLeft="30dp"
                 android:paddingVertical="2dp"
                 style="@style/left_spinner_style"
@@ -113,11 +119,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:labelFor="@+id/spellfilter_casttime_spinner"
                 android:text="@string/label_spell_filter_casttime"/>
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:paddingLeft="30dp"
                 android:paddingVertical="2dp"
                 style="@style/left_spinner_style"
@@ -125,11 +133,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:labelFor="@+id/spellfilter_target_spinner"
                 android:text="@string/label_spell_filter_target"/>
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:paddingLeft="30dp"
                 android:paddingVertical="2dp"
                 style="@style/left_spinner_style"
@@ -137,11 +147,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:labelFor="@+id/spellfilter_ability_spinner"
                 android:text="@string/label_spell_filter_ability"/>
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:paddingLeft="30dp"
                 android:paddingVertical="2dp"
                 style="@style/left_spinner_style"
@@ -149,11 +161,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:labelFor="@+id/spellfilter_atktype_spinner"
                 android:text="@string/label_spell_filter_atktype"/>
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:paddingLeft="30dp"
                 android:paddingVertical="2dp"
                 style="@style/left_spinner_style"
@@ -161,11 +175,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:labelFor="@+id/spellfilter_dmgtype_spinner"
                 android:text="@string/label_spell_filter_dmgtype"/>
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:paddingLeft="30dp"
                 android:paddingVertical="2dp"
                 style="@style/left_spinner_style"
@@ -173,11 +189,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:labelFor="@+id/spellfilter_condition_spinner"
                 android:text="@string/label_spell_filter_condition"/>
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:paddingLeft="30dp"
                 android:paddingVertical="2dp"
                 style="@style/left_spinner_style"
@@ -185,11 +203,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:labelFor="@+id/spellfilter_source_spinner"
                 android:text="@string/label_spell_filter_source"/>
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:paddingLeft="30dp"
                 android:paddingVertical="2dp"
                 style="@style/left_spinner_style"
@@ -197,11 +217,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:labelFor="@+id/spellfilter_class_spinner"
                 android:text="@string/label_spell_filter_class"/>
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:paddingLeft="30dp"
                 android:paddingVertical="2dp"
                 style="@style/left_spinner_style"
@@ -215,24 +237,41 @@
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:text="@string/label_spellcomponent"/>
-        <CheckBox
-            android:layout_width="wrap_content"
+        <GridLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checked="false"
-            android:text="@string/label_spell_filter_verbal"
-            android:id="@+id/spellfilter_verbal_checkbox"/>
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="false"
-            android:text="@string/label_spell_filter_somatic"
-            android:id="@+id/spellfilter_somatic_checkbox"/>
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="false"
-            android:text="@string/label_spell_filter_material"
-            android:id="@+id/spellfilter_material_checkbox"/>
+            android:columnCount="2">
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:paddingRight="20dp"
+                android:text="@string/label_spell_filter_verbal"
+                android:id="@+id/spellfilter_verbal_checkbox"/>
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:layout_rowSpan="3"
+                android:layout_gravity="center_vertical"
+                android:textSize="12sp"
+                android:text="@string/label_spell_filter_exclude"
+                android:id="@+id/spellfilter_exclude_component"/>
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:paddingRight="20dp"
+                android:text="@string/label_spell_filter_somatic"
+                android:id="@+id/spellfilter_somatic_checkbox"/>
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:paddingRight="20dp"
+                android:text="@string/label_spell_filter_material"
+                android:id="@+id/spellfilter_material_checkbox"/>
+        </GridLayout>
         <Space
             android:layout_width="match_parent"
             android:layout_height="10dp"/>

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
+import java.util.Collection;
 import ca.printf.dndb.R;
 import ca.printf.dndb.entity.Spell;
 
@@ -65,7 +66,7 @@ public class SpellDetailsFragment extends Fragment {
         displayStringList(spell.getAtkTypes(), v, R.id.spelldetail_attacks, R.id.spelldetail_attacks_container);
         displayStringList(spell.getDmgTypes(), v, R.id.spelldetail_damages, R.id.spelldetail_damages_container);
         displayStringList(spell.getConditions(), v, R.id.spelldetail_conditions, R.id.spelldetail_conditions_container);
-        ((TextView)v.findViewById(R.id.spelldetail_sources)).setText(colateStringList(spell.getSources()));
+        ((TextView)v.findViewById(R.id.spelldetail_sources)).setText(colateStringList(spell.getSources().values()));
         ((TextView)v.findViewById(R.id.spelldetail_classes)).setText(colateStringList(spell.getClasses()));
         return v;
     }
@@ -82,7 +83,7 @@ public class SpellDetailsFragment extends Fragment {
         parent.findViewById(containerId).setVisibility(View.VISIBLE);
     }
 
-    private String colateStringList(ArrayList<String> list) {
+    private String colateStringList(Collection<String> list) {
         String ret = "";
         String delim = "";
         for(String s : list) {

@@ -12,12 +12,33 @@ public class SpellSortComparator implements Comparator<Spell> {
     public static final String SORT_RANGE = "Range";
     public static final String SORT_MATCOST = "Material Cost";
     private String sortCondition;
+    private boolean reverseOrder;
 
-    public SpellSortComparator() {this(SORT_NAME);}
-    public SpellSortComparator(String sortCondition) {this.sortCondition = sortCondition;}
-    public void setSortCondition(String sortCondition) {this.sortCondition = sortCondition;}
+    public SpellSortComparator() {
+        this(SORT_NAME);
+    }
 
-    public int compare(Spell s1, Spell s2) {
+    public SpellSortComparator(String sortCondition) {
+        this.sortCondition = sortCondition;
+        this.reverseOrder = false;
+    }
+
+    public SpellSortComparator(String sortCondition, boolean reverseOrder) {
+        this.sortCondition = sortCondition;
+        this.reverseOrder = reverseOrder;
+    }
+
+    public void setSortCondition(String sortCondition) {
+        this.sortCondition = sortCondition;
+    }
+
+    public void setReverseOrder(boolean sortDescending) {
+        this.reverseOrder = sortDescending;
+    }
+
+    public int compare(Spell o1, Spell o2) {
+        Spell s1 = reverseOrder ? o2 : o1;
+        Spell s2 = reverseOrder ? o1 : o2;
         switch(sortCondition) {
             case SORT_LEVEL :
                 return s1.getLevel() - s2.getLevel();
