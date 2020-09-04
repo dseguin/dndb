@@ -20,7 +20,6 @@ import com.google.android.material.navigation.NavigationView;
 public class RootActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private static final String FRAG_DEFAULT = "FRAG_DEFAULT";
-    private static final String FRAG_SPELLS_LIST = "FRAG_SPELLS_LIST";
     private Fragment content_frag;
     private DrawerLayout drw;
 
@@ -35,16 +34,19 @@ public class RootActivity extends AppCompatActivity
         ActionBarDrawerToggle drw_tog =
                 new ActionBarDrawerToggle(this, drw, tb, R.string.app_name, R.string.app_name);
         drw.addDrawerListener(drw_tog);
-        drw.openDrawer(GravityCompat.START);
+        if(savedInstanceState == null)
+            drw.openDrawer(GravityCompat.START);
         drw_tog.syncState();
 
         ((NavigationView)findViewById(R.id.nav_sidebar)).setNavigationItemSelectedListener(this);
 
-        content_frag = new DefaultFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.content_frame, content_frag, FRAG_DEFAULT)
-                .commit();
+        if(savedInstanceState == null) {
+            content_frag = new DefaultFragment();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.content_frame, content_frag, FRAG_DEFAULT)
+                    .commit();
+        }
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

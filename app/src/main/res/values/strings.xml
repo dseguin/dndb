@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE resources [<!ENTITY appversion "0.1.0"> <!ENTITY appname "D&amp;DB">]>
+<!DOCTYPE resources [<!ENTITY appversion "0.1.1"> <!ENTITY appname "D&amp;DB">]>
 
 <resources>
     <string name="app_name">&appname;</string>

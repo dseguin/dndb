@@ -14,6 +14,7 @@ import ca.printf.dndb.R;
 import ca.printf.dndb.entity.Spell;
 
 public class SpellDetailsFragment extends Fragment {
+    private static final String PREV_SPELL = "previous_spell";
     private Spell spell;
 
     public SpellDetailsFragment(Spell spell) {
@@ -24,6 +25,18 @@ public class SpellDetailsFragment extends Fragment {
 
     public void onCreate(Bundle b) {
         super.onCreate(b);
+        if(b == null)
+            return;
+        spell = (Spell)b.getSerializable(PREV_SPELL);
+    }
+
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(saveCurrentSpell(outState));
+    }
+
+    private Bundle saveCurrentSpell(Bundle b) {
+        b.putSerializable(PREV_SPELL, this.spell);
+        return b;
     }
 
     public View onCreateView(LayoutInflater li, ViewGroup vg, Bundle b) {

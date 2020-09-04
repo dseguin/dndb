@@ -1,16 +1,16 @@
 D&DB
 ====
 
-![Opening Screen](images/screen1.png) ![Spell List](images/screen2.png) ![Spell Details](images/screen3.png)
+![Spell Pages](images/screen_group1.png)
 
 Android app and database for searching and displaying data for Dungeons & Dragons (5e).
 
-Pre-built binaries available in the [releases tab](https://github.com/dseguin/dndb/releases/tag/v0.1.0), or download the [latest release directly](https://github.com/dseguin/dndb/releases/download/v0.1.0/dndb-androidapi19-0.1.0.apk).
+Pre-built binaries available in the [releases tab](https://github.com/dseguin/dndb/releases/latest), or download the [latest release directly](https://github.com/dseguin/dndb/releases/download/v0.1.1/dndb-androidapi19-0.1.1.apk).
 
 Spells
 ------
 
-![Spell Filtering](images/screen4.png) ![Spell Sorting](images/screen5.png)
+![Spell Filtering](images/screen_group2.png)
 
 Spells can be sorted and filtered, and selecting one shows further details. The spells included are only the ones available under the Open Game License.
 
