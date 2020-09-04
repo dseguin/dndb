@@ -5,11 +5,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import androidx.fragment.app.FragmentActivity;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.ZipFile;
 import ca.printf.dndb.R;
+import ca.printf.dndb.view.ErrorFragment;
 
 public class DndbSQLManager extends SQLiteOpenHelper {
     private static final String DB_NAME = "dndb.sqlite";
@@ -33,18 +35,21 @@ public class DndbSQLManager extends SQLiteOpenHelper {
     public static final String TABLE_SPELL_COMPONENT = "spell_component";
     public static final String TABLE_COMPONENT = "component";
     private Context ctx;
+    private FragmentActivity act;
 
-    public DndbSQLManager(Context c) {
+    public DndbSQLManager(Context c, FragmentActivity a) {
         super(c, DB_NAME, null, DB_VER);
         this.ctx = c;
+        this.act = a;
     }
 
     public void onCreate(SQLiteDatabase db) {
         try {
             CommonIO.execSQLFromFile(ctx, R.raw.spells_ddl, db);
             CommonIO.execSQLFromFile(ctx, R.raw.spells_init_dml, db);
-        } catch (IOException e) {
+        } catch (Exception e) {
             Log.e(this.getClass().getName(), "Error creating database ", e);
+            ErrorFragment.errorScreen(act.getSupportFragmentManager(), "Error creating database", e);
         }
     }
 

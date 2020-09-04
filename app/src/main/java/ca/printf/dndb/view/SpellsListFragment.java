@@ -47,7 +47,7 @@ public class SpellsListFragment extends Fragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dbman = new DndbSQLManager(getContext());
+        dbman = new DndbSQLManager(getContext(), getActivity());
         initSpells();
         try {
             if(loadSpellCache()) {

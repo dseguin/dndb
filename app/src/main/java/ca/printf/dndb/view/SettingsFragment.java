@@ -63,19 +63,21 @@ public class SettingsFragment extends Fragment {
         if(requestCode != FILEPICKER_RESULT || resultCode != Activity.RESULT_OK)
             return;
         try {
-            DndbSQLManager dbman = new DndbSQLManager(getContext());
+            DndbSQLManager dbman = new DndbSQLManager(getContext(), getActivity());
             SQLiteDatabase db = dbman.getWritableDatabase();
             dbman.execZipPackage(db, getActivity().getContentResolver().openInputStream(data.getData()));
             db.close();
         } catch (FileNotFoundException | NullPointerException e) {
             Log.e("onActivityResult", "Error loading file from file picker", e);
-        } catch (IOException e) {
-            Log.e("onActivityResult", "Error processing SQL in " + data.getData().toString(), e);
+        } catch (Exception e) {
+            Log.e("onActivityResult", "Error processing source package", e);
+            ErrorFragment.errorScreen(getActivity().getSupportFragmentManager(),
+                    "Error processing source package", e);
         }
     }
 
     private void resetDB() {
-        DndbSQLManager dbman = new DndbSQLManager(getContext());
+        DndbSQLManager dbman = new DndbSQLManager(getContext(), getActivity());
         SQLiteDatabase db = dbman.getWritableDatabase();
         Log.d("resetDB", "Clearing database with onCreate()");
         dbman.onCreate(db);
