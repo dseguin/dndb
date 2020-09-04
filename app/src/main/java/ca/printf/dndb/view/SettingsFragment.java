@@ -1,6 +1,7 @@
 package ca.printf.dndb.view;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -9,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.util.Supplier;
 import androidx.fragment.app.Fragment;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -26,11 +29,25 @@ public class SettingsFragment extends Fragment {
         View v = li.inflate(R.layout.fragment_settings, vg, false);
         Button importBtn = v.findViewById(R.id.settings_import_source);
         importBtn.setOnClickListener(importBtnListener);
+        Button resetBtn = v.findViewById(R.id.settings_reset_db);
+        resetBtn.setOnClickListener(resetBtnListener);
         return v;
     }
 
     private View.OnClickListener importBtnListener = new View.OnClickListener() {
         public void onClick(View v) {showFilePicker();}
+    };
+
+    private View.OnClickListener resetBtnListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            Supplier<Void> resetAction = new Supplier<Void>() {
+                public Void get() {
+                    resetDB();
+                    return null;
+                }
+            };
+            confirmationDialog(getString(R.string.label_settings_reset_db_confim_msg), resetAction);
+        }
     };
 
     // https://riptutorial.com/android/example/14425/showing-a-file-chooser-and-reading-the-result
@@ -55,5 +72,27 @@ public class SettingsFragment extends Fragment {
         } catch (IOException e) {
             Log.e("onActivityResult", "Error processing SQL in " + data.getData().toString(), e);
         }
+    }
+
+    private void resetDB() {
+        DndbSQLManager dbman = new DndbSQLManager(getContext());
+        SQLiteDatabase db = dbman.getWritableDatabase();
+        Log.d("resetDB", "Clearing database with onCreate()");
+        dbman.onCreate(db);
+        db.close();
+        dbman.close();
+    }
+
+    private void confirmationDialog(String msg, final Supplier<Void> confirmAction) {
+        AlertDialog.Builder confirm = new AlertDialog.Builder(getContext());
+        confirm.setTitle(R.string.general_confirm_dialog_title);
+        confirm.setMessage(msg);
+        confirm.setNegativeButton(R.string.general_button_cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {dialog.dismiss();}
+        });
+        confirm.setPositiveButton(R.string.general_button_confirm, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {confirmAction.get();}
+        });
+        confirm.create().show();
     }
 }

@@ -299,7 +299,7 @@ public class SpellsListFragment extends Fragment {
                 }
                 if(!source.contains(getString(R.string.label_spell_filter_source))) {
                     boolean found = false;
-                    for(String t : s.getSources()) {
+                    for(String t : s.getSources().keySet()) {
                         if(found = source.equals(t))
                             break;
                     }
@@ -329,7 +329,6 @@ public class SpellsListFragment extends Fragment {
                     continue;
                 spellsFiltered.add(s);
             }
-            Log.d("DEBUG", "FILTERED SEARCH");
             spells = spellsFiltered;
             adapter.setSpells(spells);
             adapter.notifyDataSetChanged();
@@ -347,15 +346,20 @@ public class SpellsListFragment extends Fragment {
     }
 
     private void insertDefaultSpells() {
+        insertSpellsFromResource(R.raw.srd);
+        insertSpellsFromResource(R.raw.ee);
+    }
+
+    private void insertSpellsFromResource(int rawResourceId) {
         SQLiteDatabase db = dbman.getWritableDatabase();
-        InputStream zip = getResources().openRawResource(R.raw.srd);
+        InputStream zip = getResources().openRawResource(rawResourceId);
         try {
             dbman.execZipPackage(db, zip);
         } catch (IOException e) {
             db.close();
-            Log.e("initSpells", "Error processing stream R.raw.srd", e);
+            Log.e("initSpells", "Error processing stream " + getResources().getResourceName(rawResourceId), e);
             ErrorFragment.errorScreen(getActivity().getSupportFragmentManager(),
-                    "initSpells: Error processing stream R.raw.srd", e);
+                    "initSpells: Error processing stream " + getResources().getResourceName(rawResourceId), e);
         }
         db.close();
     }
@@ -423,8 +427,10 @@ public class SpellsListFragment extends Fragment {
             s.getConditions().add(row.getString(row.getColumnIndex(stripTableFromCol(Spell.COL_CONDITION))));
         row.close();
         row = db.rawQuery(Spell.querySource(s.getName()), null);
-        while(row.moveToNext())
-            s.getSources().add(row.getString(row.getColumnIndex(stripTableFromCol(Spell.COL_SOURCE_SHORTNAME))));
+        while(row.moveToNext()) {
+            s.getSources().put(row.getString(row.getColumnIndex(stripTableFromCol(Spell.COL_SOURCE_SHORTNAME))),
+                    row.getString(row.getColumnIndex(stripTableFromCol(Spell.COL_SOURCE_FULLNAME))));
+        }
         row.close();
         row = db.rawQuery(Spell.queryClass(s.getName()), null);
         while(row.moveToNext())

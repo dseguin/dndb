@@ -36,4 +36,25 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorPrimary"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:backgroundTint="@color/colorAccent"
+        android:text="@string/label_settings_reset_db"
+        android:id="@+id/settings_reset_db"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="20dp"
+        android:text="@string/label_settings_reset_db_desc"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary"/>
 </LinearLayout>

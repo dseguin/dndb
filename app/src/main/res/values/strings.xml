@@ -82,4 +82,9 @@
     <string name="label_settings_header">Settings</string>
     <string name="label_settings_import_source">Import Source</string>
     <string name="label_settings_import_source_desc">Loads a sourcebook package and adds it to the current database.</string>
+    <string name="label_settings_reset_db">Reset Database</string>
+    <string name="label_settings_reset_db_desc">Deletes all data from the database and refills it with default data.</string>
+    <string name="general_confirm_dialog_title">Are you sure?</string>
+    <string name="general_button_confirm">Confirm</string>
+    <string name="label_settings_reset_db_confim_msg">Are you sure you want to reset your database to initial defaults?</string>
 </resources>

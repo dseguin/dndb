@@ -2,6 +2,8 @@ package ca.printf.dndb.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import ca.printf.dndb.data.DndbSQLManager;
 
 public class Spell implements Serializable {
@@ -97,7 +99,8 @@ public class Spell implements Serializable {
     private ArrayList<String> atk_types = new ArrayList<>();
     private ArrayList<String> dmg_types = new ArrayList<>();
     private ArrayList<String> conditions = new ArrayList<>();
-    private ArrayList<String> sources = new ArrayList<>();
+    // <SHORTNAME, FULLNAME> (shortname for list/selection, fullname for details)
+    private Map<String, String> sources = new HashMap<>();
     private ArrayList<String> classes = new ArrayList<>();
 
     public Spell(long id) {this.id = id;}
@@ -125,7 +128,7 @@ public class Spell implements Serializable {
     public ArrayList<String> getAtkTypes() {return atk_types;}
     public ArrayList<String> getDmgTypes() {return dmg_types;}
     public ArrayList<String> getConditions() {return conditions;}
-    public ArrayList<String> getSources() {return sources;}
+    public Map<String, String> getSources() {return sources;}
     public ArrayList<String> getClasses() {return classes;}
 
     public void setId(long id) {this.id = id;}
@@ -150,7 +153,7 @@ public class Spell implements Serializable {
     public void setAtkTypes(ArrayList<String> atk_types) {this.atk_types = atk_types;}
     public void setDmgTypes(ArrayList<String> dmg_types) {this.dmg_types = dmg_types;}
     public void setConditions(ArrayList<String> conditions) {this.conditions = conditions;}
-    public void setSources(ArrayList<String> sources) {this.sources = sources;}
+    public void setSources(Map<String, String> sources) {this.sources = sources;}
     public void setClasses(ArrayList<String> classes) {this.classes = classes;}
 
     private static final String JOIN_SPELL_TABLE(final String TABLE) {
