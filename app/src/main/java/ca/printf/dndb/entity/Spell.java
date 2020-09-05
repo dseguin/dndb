@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import ca.printf.dndb.data.DndbSQLManager;
+import ca.printf.dndb.io.DndbSQLManager;
 
 public class Spell implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -181,7 +181,7 @@ public class Spell implements Serializable {
     private static String createWhereClause(String spellname) {
         if(spellname == null || spellname.isEmpty())
             return " ";
-        spellname = ca.printf.dndb.data.CommonIO.sanitizeString(spellname);
+        spellname = ca.printf.dndb.io.CommonIO.sanitizeString(spellname);
         return " WHERE " + COL_NAME + " LIKE '" + spellname + "'";
     }
 

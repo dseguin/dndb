@@ -1,4 +1,4 @@
-package ca.printf.dndb.view;
+package ca.printf.dndb;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
@@ -14,12 +14,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import ca.printf.dndb.R;
+import ca.printf.dndb.view.BookmarkList;
+import ca.printf.dndb.view.DefaultPage;
+import ca.printf.dndb.view.Settings;
+import ca.printf.dndb.view.SpellList;
 import com.google.android.material.navigation.NavigationView;
 
 public class RootActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private static final String FRAG_DEFAULT = "FRAG_DEFAULT";
     private Fragment content_frag;
     private DrawerLayout drw;
 
@@ -41,17 +43,17 @@ public class RootActivity extends AppCompatActivity
         ((NavigationView)findViewById(R.id.nav_sidebar)).setNavigationItemSelectedListener(this);
 
         if(savedInstanceState == null) {
-            content_frag = new DefaultFragment();
+            content_frag = new DefaultPage();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.content_frame, content_frag, FRAG_DEFAULT)
+                    .add(R.id.content_frame, content_frag)
                     .commit();
         }
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.nav_menu, menu);
-        menu.findItem(R.id.menu_spells).setVisible(false);
+        menu.setGroupVisible(R.id.menu_group_categories, false);
         return true;
     }
 
@@ -66,10 +68,13 @@ public class RootActivity extends AppCompatActivity
     private boolean menuAction(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_spells :
-                openContentFragment(new SpellsListFragment());
+                openContentFragment(new SpellList());
+                break;
+            case R.id.menu_bookmarks :
+                openContentFragment(new BookmarkList());
                 break;
             case R.id.menu_settings :
-                openContentFragment(new SettingsFragment());
+                openContentFragment(new Settings());
                 break;
             case R.id.menu_about :
                 createAboutDialog().show();

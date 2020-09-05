@@ -1,4 +1,4 @@
-package ca.printf.dndb.data;
+package ca.printf.dndb.io;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -117,6 +117,8 @@ public class CommonIO {
 
     private static String _readZipStreamEntry(ZipEntry ze, ZipInputStream zis) throws IOException {
         int size = (int)ze.getSize();
+        if(size < 0)
+            return null;
         byte[] buf = new byte[size];
         int bytes_read;
         for(bytes_read = 0; bytes_read < size;) {
@@ -138,7 +140,7 @@ public class CommonIO {
                 continue;
             }
             String s = getZipFileContent(zf, entry);
-            if(s.isEmpty())
+            if(s == null || s.isEmpty())
                 Log.w("getZipFilesContents", "No data read from " + file);
             else
                 contents.add(s);

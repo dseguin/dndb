@@ -9,6 +9,10 @@
             android:id="@+id/menu_spells"
             android:title="@string/menu_spells"
             app:showAsAction="never"/>
+        <item
+            android:id="@+id/menu_bookmarks"
+            android:title="@string/menu_bookmarks"
+            app:showAsAction="never"/>
     </group>
     <group
         android:id="@+id/menu_group_other"

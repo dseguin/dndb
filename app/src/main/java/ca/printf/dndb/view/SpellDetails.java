@@ -13,15 +13,15 @@ import java.util.Collection;
 import ca.printf.dndb.R;
 import ca.printf.dndb.entity.Spell;
 
-public class SpellDetailsFragment extends Fragment {
+public class SpellDetails extends Fragment {
     private static final String PREV_SPELL = "previous_spell";
     private Spell spell;
 
-    public SpellDetailsFragment(Spell spell) {
+    public SpellDetails(Spell spell) {
         this.spell = spell;
     }
 
-    public SpellDetailsFragment() {}
+    public SpellDetails() {}
 
     public void onCreate(Bundle b) {
         super.onCreate(b);
@@ -40,7 +40,7 @@ public class SpellDetailsFragment extends Fragment {
     }
 
     public View onCreateView(LayoutInflater li, ViewGroup vg, Bundle b) {
-        View v = li.inflate(R.layout.fragment_spell_details, vg, false);
+        View v = li.inflate(R.layout.spell_details_page, vg, false);
         if(this.spell == null)
             return v;
         ((TextView)v.findViewById(R.id.spelldetail_spellname)).setText(spell.getName());
@@ -110,7 +110,7 @@ public class SpellDetailsFragment extends Fragment {
         fragManager
                 .beginTransaction()
                 .addToBackStack(null)
-                .replace(R.id.content_frame, new SpellDetailsFragment(spell))
+                .replace(R.id.content_frame, new SpellDetails(spell))
                 .commit();
     }
 }

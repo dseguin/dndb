@@ -14,11 +14,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.util.Supplier;
 import androidx.fragment.app.Fragment;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import ca.printf.dndb.R;
-import ca.printf.dndb.data.DndbSQLManager;
 
-public class SettingsFragment extends Fragment {
+import ca.printf.dndb.R;
+import ca.printf.dndb.io.DndbSQLManager;
+
+public class Settings extends Fragment {
     private static final int FILEPICKER_RESULT = 0xF17E;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,7 @@ public class SettingsFragment extends Fragment {
     }
 
     public View onCreateView(LayoutInflater li, ViewGroup vg, Bundle b) {
-        View v = li.inflate(R.layout.fragment_settings, vg, false);
+        View v = li.inflate(R.layout.settings_page, vg, false);
         Button importBtn = v.findViewById(R.id.settings_import_source);
         importBtn.setOnClickListener(importBtnListener);
         Button resetBtn = v.findViewById(R.id.settings_reset_db);
@@ -63,7 +63,7 @@ public class SettingsFragment extends Fragment {
         if(requestCode != FILEPICKER_RESULT || resultCode != Activity.RESULT_OK)
             return;
         try {
-            DndbSQLManager dbman = new DndbSQLManager(getContext(), getActivity());
+            DndbSQLManager dbman = new DndbSQLManager(getActivity());
             SQLiteDatabase db = dbman.getWritableDatabase();
             dbman.execZipPackage(db, getActivity().getContentResolver().openInputStream(data.getData()));
             db.close();
@@ -71,13 +71,13 @@ public class SettingsFragment extends Fragment {
             Log.e("onActivityResult", "Error loading file from file picker", e);
         } catch (Exception e) {
             Log.e("onActivityResult", "Error processing source package", e);
-            ErrorFragment.errorScreen(getActivity().getSupportFragmentManager(),
+            ErrorPage.errorScreen(getActivity().getSupportFragmentManager(),
                     "Error processing source package", e);
         }
     }
 
     private void resetDB() {
-        DndbSQLManager dbman = new DndbSQLManager(getContext(), getActivity());
+        DndbSQLManager dbman = new DndbSQLManager(getActivity());
         SQLiteDatabase db = dbman.getWritableDatabase();
         Log.d("resetDB", "Clearing database with onCreate()");
         dbman.onCreate(db);
