@@ -1,27 +1,32 @@
 package ca.printf.dndb.view;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Collection;
 import ca.printf.dndb.R;
 import ca.printf.dndb.entity.Spell;
+import ca.printf.dndb.list.BookmarkListSpinner;
+import ca.printf.dndb.logic.BookmarkListController;
 
-public class SpellDetailsFragment extends Fragment {
+public class SpellDetailsPage extends Fragment {
     private static final String PREV_SPELL = "previous_spell";
     private Spell spell;
 
-    public SpellDetailsFragment(Spell spell) {
+    public SpellDetailsPage(Spell spell) {
         this.spell = spell;
     }
 
-    public SpellDetailsFragment() {}
+    public SpellDetailsPage() {}
 
     public void onCreate(Bundle b) {
         super.onCreate(b);
@@ -39,10 +44,42 @@ public class SpellDetailsFragment extends Fragment {
         return b;
     }
 
+    private View.OnClickListener bookmarkbtn = new View.OnClickListener() {
+        public void onClick(View v) {
+            showBookmarkDialog();
+        }
+    };
+
+    private void showBookmarkDialog() {
+        AlertDialog.Builder dlg = new AlertDialog.Builder(getContext());
+        dlg.setTitle(R.string.label_spell_addtobookmark_title);
+        final boolean noBookmarks = BookmarkListController.isEmpty();
+        final Spinner bookmarkSpinner = new Spinner(getContext());
+        bookmarkSpinner.setPadding(100, 50, 100, 50);
+        bookmarkSpinner.setAdapter(new BookmarkListSpinner(getContext()));
+        if(!noBookmarks)
+            dlg.setView(bookmarkSpinner);
+        else
+            dlg.setMessage(R.string.label_spell_addtobookmark_nobookmarkmsg);
+        dlg.setNegativeButton(R.string.general_button_cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {dialog.dismiss();}
+        });
+        if(!noBookmarks) {
+            dlg.setPositiveButton(R.string.general_button_confirm, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    BookmarkListController.addSpell(bookmarkSpinner.getSelectedItemId(),
+                            SpellDetailsPage.this.spell, getActivity());
+                }
+            });
+        }
+        dlg.create().show();
+    }
+
     public View onCreateView(LayoutInflater li, ViewGroup vg, Bundle b) {
-        View v = li.inflate(R.layout.fragment_spell_details, vg, false);
+        View v = li.inflate(R.layout.spell_details_page, vg, false);
         if(this.spell == null)
             return v;
+        v.findViewById(R.id.spelldetail_btn_addtobookmark).setOnClickListener(bookmarkbtn);
         ((TextView)v.findViewById(R.id.spelldetail_spellname)).setText(spell.getName());
         ((TextView)v.findViewById(R.id.spelldetail_description)).setText(convertNewlines(spell.getDesc()));
         if(spell.getHigherDesc() != null && !spell.getHigherDesc().isEmpty()) {
@@ -110,7 +147,7 @@ public class SpellDetailsFragment extends Fragment {
         fragManager
                 .beginTransaction()
                 .addToBackStack(null)
-                .replace(R.id.content_frame, new SpellDetailsFragment(spell))
+                .replace(R.id.content_frame, new SpellDetailsPage(spell))
                 .commit();
     }
 }

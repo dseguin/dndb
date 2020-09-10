@@ -12,8 +12,8 @@ public class SpellSortSpinner implements SpinnerAdapter {
     private ArrayList<String> sortlist;
     private Context ctx;
 
-    public SpellSortSpinner(ArrayList<String> sortlist, Context ctx) {
-        this.sortlist = sortlist;
+    public SpellSortSpinner(Context ctx) {
+        this.sortlist = createSortByList();
         this.ctx = ctx;
     }
 
@@ -35,5 +35,17 @@ public class SpellSortSpinner implements SpinnerAdapter {
         TextView tv = new TextView(ctx);
         tv.setText(sortlist.get(position));
         return tv;
+    }
+
+    private static ArrayList<String> createSortByList() {
+        ArrayList<String> ret = new ArrayList<>();
+        ret.add(SpellSortComparator.SORT_NAME);
+        ret.add(SpellSortComparator.SORT_LEVEL);
+        ret.add(SpellSortComparator.SORT_SCHOOL);
+        ret.add(SpellSortComparator.SORT_DURATION);
+        ret.add(SpellSortComparator.SORT_CASTTIME);
+        ret.add(SpellSortComparator.SORT_RANGE);
+        ret.add(SpellSortComparator.SORT_MATCOST);
+        return ret;
     }
 }

@@ -4,30 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="20dp"
     android:orientation="vertical"
     android:background="@color/colorPrimaryDark"
-    tools:context=".view.ErrorFragment">
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="40dp"/>
+    tools:context=".view.ErrorPage">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:textSize="24sp"
+        android:gravity="center"
+        android:text="@string/label_error_header"/>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:typeface="monospace"
+        android:textIsSelectable="true"
         android:text="@string/placeholder_errorheader"
         android:id="@+id/error_header_txt"/>
     <Space
         android:layout_width="match_parent"
-        android:layout_height="20dp"/>
+        android:layout_height="10dp"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
-            android:layout_width="300dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:textColor="@color/colorAccent"
+            android:typeface="monospace"
+            android:textIsSelectable="true"
             android:text="@string/placeholder_errorbody"
             android:id="@+id/error_body_txt"/>
     </ScrollView>

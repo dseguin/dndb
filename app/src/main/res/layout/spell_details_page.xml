@@ -1,25 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/colorPrimaryDark"
-    tools:context=".view.SpellDetailsFragment">
+    tools:context=".view.SpellDetailsPage">
     <View
         android:layout_width="match_parent"
         android:background="@color/colorAccent"
         android:layout_height="10dp"/>
-    <TextView
+    <LinearLayout
+        android:background="@color/colorAccent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:text="@string/placeholder_spellname"
         android:paddingHorizontal="10dp"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:id="@+id/spelldetail_spellname"/>
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:layout_gravity="center_vertical"
+            android:background="@color/colorAccent"
+            android:text="@string/placeholder_spellname"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:id="@+id/spelldetail_spellname"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:textSize="12sp"
+            app:backgroundTint="@color/colorPrimaryDark"
+            android:text="@string/spells_btn_addtobookmark"
+            android:id="@+id/spelldetail_btn_addtobookmark"/>
+    </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:background="@color/colorAccent"

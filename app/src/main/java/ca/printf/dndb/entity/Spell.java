@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import ca.printf.dndb.data.DndbSQLManager;
+import ca.printf.dndb.io.DndbSQLManager;
 
 public class Spell implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -106,7 +106,7 @@ public class Spell implements Serializable {
     private ArrayList<String> classes = new ArrayList<>();
 
     public Spell(long id) {this.id = id;}
-    public Spell() {this.id = -1;}
+    public Spell() {this(-1);}
 
     public long getId() {return id;}
     public String getName() {return name;}
@@ -158,6 +158,10 @@ public class Spell implements Serializable {
     public void setSources(Map<String, String> sources) {this.sources = sources;}
     public void setClasses(ArrayList<String> classes) {this.classes = classes;}
 
+    public boolean equals(Object o) {
+        return super.equals(o) || (o instanceof Spell && ((Spell)o).getName().equals(this.getName()));
+    }
+
     private static final String JOIN_SPELL_TABLE(final String TABLE) {
         return "INNER JOIN " + TABLE + " ON " + TABLE + ".rowid = "
                 + DndbSQLManager.TABLE_SPELL + "." + TABLE;
@@ -181,7 +185,7 @@ public class Spell implements Serializable {
     private static String createWhereClause(String spellname) {
         if(spellname == null || spellname.isEmpty())
             return " ";
-        spellname = ca.printf.dndb.data.CommonIO.sanitizeString(spellname);
+        spellname = ca.printf.dndb.io.CommonIO.sanitizeString(spellname);
         return " WHERE " + COL_NAME + " LIKE '" + spellname + "'";
     }
 

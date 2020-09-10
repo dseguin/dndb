@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/colorPrimaryDark"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:layout_gravity="center_vertical"
+            android:textSize="20sp"
+            android:text="@string/placeholder_bookmarkname"
+            android:id="@+id/bookmarklistitem_bookmarkname"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="0.3"
+            android:textSize="12sp"
+            android:background="@android:drawable/toast_frame"
+            app:backgroundTint="@color/colorAccent"
+            android:text="@string/label_bookmarklistitem_delete_btn"
+            android:focusable="false"
+            android:id="@+id/bookmarklistitem_delete_btn"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@color/colorAccent"/>
+</LinearLayout>

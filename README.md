@@ -3,9 +3,9 @@ D&DB
 
 ![Spell Pages](images/screen_group1.png)
 
-Android app and database for searching and displaying data for Dungeons & Dragons (5e).
+D&DB is an Android app/database for searching and displaying data for Dungeons & Dragons (5e). The only data included by default comes from free source material by Wizards of the Coast, including the "System Reference Document", "Basic Rules", and "Elemental Evil Player's Companion".
 
-Pre-built binaries available in the [releases tab](https://github.com/dseguin/dndb/releases/latest), or download the [latest release directly](https://github.com/dseguin/dndb/releases/download/v0.1.2/dndb-androidapi19-0.1.2.apk).
+Pre-built binaries available in the [releases tab](https://github.com/dseguin/dndb/releases/latest), or download the [latest release directly](https://github.com/dseguin/dndb/releases/download/v0.1.3/dndb-androidapi19-0.1.3.apk).
 
 Spells
 ------
@@ -58,9 +58,7 @@ License
 
 Source code specific to D&DB is released under the MIT License.
 
-Data for the "Basic Rules" and other included material is provided by [Wizards of the Coast](https://dnd.wizards.com) under the [Open Game License](https://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf).
-
-The "dragon ampersand" is part of the Dungeons & Dragons logo and [is available as a press asset from Wizards of the Coast](https://dnd.wizards.com/pressassets).
+Data included in this app is derived only from the SRD and other material by [Wizards of the Coast](https://dnd.wizards.com), either released under the [Open Game License](https://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf) or as free source material.
 
 This software was developed using Google's Android Studio, which is based on IntelliJ IDEA Community Edition, and released under the Apache v2 License. The software makes use of the Android SDK, which is subject to [the Android SDK terms and conditions](https://developer.android.com/studio/terms).
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE resources [<!ENTITY appversion "0.1.2"> <!ENTITY appname "D&amp;DB">]>
+<!DOCTYPE resources [<!ENTITY appversion "0.1.3"> <!ENTITY appname "D&amp;DB">]>
 
 <resources>
     <string name="app_name">&appname;</string>
@@ -73,17 +73,16 @@
     <string name="general_button_sort">Sort</string>
     <string name="label_spell_sort_header">Sort Spells</string>
     <string name="about_text">&appname; is an application for browsing data from
-        the 5th edition ruleset of Dungeons &amp; Dragons.\n\n
+        the 5th edition ruleset of <i>Dungeons &amp; Dragons</i>.\n\n
         Author : <a href="https://github.com/dseguin">David Seguin</a>\n
         App Version : &appversion;\n
         Source Code : <a href="https://github.com/dseguin/dndb">GitHub</a>\n
-        License : <a href="https://github.com/dseguin/dndb/blob/stable/LICENSE">MIT</a>\n\n
-        Material included comes from the
-        <a href="https://dnd.wizards.com/articles/features/systems-reference-document-srd">Wizards of the Coast SRD</a>
+        License : <a href="https://github.com/dseguin/dndb/blob/stable/LICENSE">MIT</a>\n
+        \nMaterial included in this app is derived only from the
+        <a href="https://dnd.wizards.com/articles/features/systems-reference-document-srd">SRD</a>
         and other sources released under the
-        <a href="https://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf">Open Game License</a>.\n\n
-        The \"dragon ampersand\" is a <a href="https://dnd.wizards.com/pressassets">press asset</a>
-        provided by Wizards of the Coast.
+        <a href="https://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf">Open Game License</a>
+        or as free source material by <i>Wizards of the Coast</i>.
     </string>
     <string name="label_spell_sort_descending">Sort in descending order</string>
     <string name="label_spell_filter_exclude">Exclude selected components</string>
@@ -95,4 +94,15 @@
     <string name="general_confirm_dialog_title">Are you sure?</string>
     <string name="general_button_confirm">Confirm</string>
     <string name="label_settings_reset_db_confim_msg">Are you sure you want to reset your database to initial defaults?</string>
+    <string name="menu_bookmarks">Spell Bookmarks</string>
+    <string name="label_error_header">You rolled a NAT 1!</string>
+    <string name="placeholder_bookmarkname">BOOKMARKNAME</string>
+    <string name="label_bookmarklistitem_delete_btn">Delete</string>
+    <string name="label_bookmarklistitem_delete_msg">Are you sure you want to delete this bookmark?</string>
+    <string name="label_bookmarklist_dialogadd_title">Create a new bookmark</string>
+    <string name="placeholder_bookmarklist_dialogadd_name">Offensive/Utility</string>
+    <string name="spells_btn_addtobookmark">Bookmark</string>
+    <string name="label_spell_addtobookmark_title">Add to bookmark</string>
+    <string name="label_spell_addtobookmark_nobookmarkmsg">You don\'t have any bookmarks!</string>
+    <string name="label_bookmarkitem_delete_msg">Are you sure you want to remove this spell from this bookmark?</string>
 </resources>
