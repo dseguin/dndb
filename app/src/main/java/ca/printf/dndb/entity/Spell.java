@@ -106,7 +106,7 @@ public class Spell implements Serializable {
     private ArrayList<String> classes = new ArrayList<>();
 
     public Spell(long id) {this.id = id;}
-    public Spell() {this.id = -1;}
+    public Spell() {this(-1);}
 
     public long getId() {return id;}
     public String getName() {return name;}
@@ -157,6 +157,10 @@ public class Spell implements Serializable {
     public void setConditions(ArrayList<String> conditions) {this.conditions = conditions;}
     public void setSources(Map<String, String> sources) {this.sources = sources;}
     public void setClasses(ArrayList<String> classes) {this.classes = classes;}
+
+    public boolean equals(Object o) {
+        return super.equals(o) || (o instanceof Spell && ((Spell)o).getName().equals(this.getName()));
+    }
 
     private static final String JOIN_SPELL_TABLE(final String TABLE) {
         return "INNER JOIN " + TABLE + " ON " + TABLE + ".rowid = "

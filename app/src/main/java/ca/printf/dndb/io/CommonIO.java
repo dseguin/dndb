@@ -51,7 +51,7 @@ public class CommonIO {
         }
     }
 
-    private static void execSQLFromString(String str, SQLiteDatabase db) throws IOException {
+    public static void execSQLFromString(String str, SQLiteDatabase db) throws IOException {
         StringTokenizer tok = new StringTokenizer(str, "\n", false);
         String stmt = "";
         while(tok.hasMoreTokens()) {

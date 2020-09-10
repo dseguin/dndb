@@ -14,10 +14,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import ca.printf.dndb.view.BookmarkList;
+import ca.printf.dndb.logic.BookmarkListController;
+import ca.printf.dndb.logic.SpellListController;
+import ca.printf.dndb.view.BookmarkListPage;
 import ca.printf.dndb.view.DefaultPage;
-import ca.printf.dndb.view.Settings;
-import ca.printf.dndb.view.SpellList;
+import ca.printf.dndb.view.SettingsPage;
+import ca.printf.dndb.view.SpellListPage;
 import com.google.android.material.navigation.NavigationView;
 
 public class RootActivity extends AppCompatActivity
@@ -49,6 +51,9 @@ public class RootActivity extends AppCompatActivity
                     .add(R.id.content_frame, content_frag)
                     .commit();
         }
+
+        SpellListController.initSpells(this);
+        BookmarkListController.initBookmarks(this);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -68,13 +73,15 @@ public class RootActivity extends AppCompatActivity
     private boolean menuAction(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_spells :
-                openContentFragment(new SpellList());
+                SpellListController.initSpells(this);
+                openContentFragment(new SpellListPage());
                 break;
             case R.id.menu_bookmarks :
-                openContentFragment(new BookmarkList());
+                SpellListController.initSpells(this);
+                openContentFragment(new BookmarkListPage());
                 break;
             case R.id.menu_settings :
-                openContentFragment(new Settings());
+                openContentFragment(new SettingsPage());
                 break;
             case R.id.menu_about :
                 createAboutDialog().show();

@@ -96,4 +96,9 @@
     <string name="label_settings_reset_db_confim_msg">Are you sure you want to reset your database to initial defaults?</string>
     <string name="menu_bookmarks">Spell Bookmarks</string>
     <string name="label_error_header">You rolled a NAT 1!</string>
+    <string name="placeholder_bookmarkname">BOOKMARKNAME</string>
+    <string name="label_bookmarklistitem_delete_btn">Delete</string>
+    <string name="label_bookmarklistitem_delete_msg">Are you sure you want to delete this bookmark?</string>
+    <string name="label_bookmarklist_dialogadd_title">Create a new bookmark</string>
+    <string name="placeholder_bookmarklist_dialogadd_name">Offensive/Utility</string>
 </resources>

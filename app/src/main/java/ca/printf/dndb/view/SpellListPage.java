@@ -13,7 +13,7 @@ import android.widget.Spinner;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import ca.printf.dndb.R;
-import ca.printf.dndb.logic.SpellFilterController;
+import ca.printf.dndb.logic.SpellFilterLogic;
 import ca.printf.dndb.logic.SpellListController;
 import ca.printf.dndb.entity.Spell;
 import ca.printf.dndb.list.SpellFilterAttributeSpinner;
@@ -21,14 +21,13 @@ import ca.printf.dndb.list.SpellListviewAdapter;
 import ca.printf.dndb.list.SpellSortComparator;
 import ca.printf.dndb.list.SpellSortSpinner;
 
-public class SpellList extends Fragment {
+public class SpellListPage extends Fragment {
     private SpellListviewAdapter adapter;
     private AlertDialog filterPopup;
     private AlertDialog sortPopup;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SpellListController.initSpells(getActivity());
     }
 
     public View onCreateView(LayoutInflater li, ViewGroup v, Bundle b) {
@@ -44,7 +43,7 @@ public class SpellList extends Fragment {
 
     private AdapterView.OnItemClickListener spellSelection = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
-            SpellDetails.goToSpellDetails(getActivity().getSupportFragmentManager(), SpellListController.get(pos));
+            SpellDetailsPage.goToSpellDetails(getActivity().getSupportFragmentManager(), SpellListController.get(pos));
         }
     };
 
@@ -89,49 +88,49 @@ public class SpellList extends Fragment {
         Spinner level = filterLayout.findViewById(R.id.spellfilter_level_spinner);
         SpellFilterAttributeSpinner lvlSpinner =
                 new SpellFilterAttributeSpinner(
-                        getActivity(), SpellFilterController.DEFAULT_OPTION_LEVEL, Spell.QUERY_LEVEL_OPTIONS);
+                        getActivity(), SpellFilterLogic.DEFAULT_OPTION_LEVEL, Spell.QUERY_LEVEL_OPTIONS);
         lvlSpinner.replaceItem("0", "Cantrip");
         level.setAdapter(lvlSpinner);
 
         Spinner school = filterLayout.findViewById(R.id.spellfilter_school_spinner);
         school.setAdapter(new SpellFilterAttributeSpinner(
-                getActivity(), SpellFilterController.DEFAULT_OPTION_SCHOOL, Spell.QUERY_SCHOOL_OPTIONS));
+                getActivity(), SpellFilterLogic.DEFAULT_OPTION_SCHOOL, Spell.QUERY_SCHOOL_OPTIONS));
 
         Spinner duration = filterLayout.findViewById(R.id.spellfilter_duration_spinner);
         duration.setAdapter(new SpellFilterAttributeSpinner(
-                getActivity(), SpellFilterController.DEFAULT_OPTION_DURATION, Spell.QUERY_DURATION_OPTIONS));
+                getActivity(), SpellFilterLogic.DEFAULT_OPTION_DURATION, Spell.QUERY_DURATION_OPTIONS));
 
         Spinner casttime = filterLayout.findViewById(R.id.spellfilter_casttime_spinner);
         casttime.setAdapter(new SpellFilterAttributeSpinner(
-                getActivity(), SpellFilterController.DEFAULT_OPTION_CASTTIME, Spell.QUERY_CASTTIME_OPTIONS));
+                getActivity(), SpellFilterLogic.DEFAULT_OPTION_CASTTIME, Spell.QUERY_CASTTIME_OPTIONS));
 
         Spinner target = filterLayout.findViewById(R.id.spellfilter_target_spinner);
         target.setAdapter(new SpellFilterAttributeSpinner(
-                getActivity(), SpellFilterController.DEFAULT_OPTION_TARGET, Spell.QUERY_TARGET_OPTIONS));
+                getActivity(), SpellFilterLogic.DEFAULT_OPTION_TARGET, Spell.QUERY_TARGET_OPTIONS));
 
         Spinner save = filterLayout.findViewById(R.id.spellfilter_ability_spinner);
         save.setAdapter(new SpellFilterAttributeSpinner(
-                getActivity(), SpellFilterController.DEFAULT_OPTION_ABILITY, Spell.QUERY_ABILITY_OPTIONS));
+                getActivity(), SpellFilterLogic.DEFAULT_OPTION_ABILITY, Spell.QUERY_ABILITY_OPTIONS));
 
         Spinner atktype = filterLayout.findViewById(R.id.spellfilter_atktype_spinner);
         atktype.setAdapter(new SpellFilterAttributeSpinner(
-                getActivity(), SpellFilterController.DEFAULT_OPTION_ATKTYPE, Spell.QUERY_ATK_TYPE_OPTIONS));
+                getActivity(), SpellFilterLogic.DEFAULT_OPTION_ATKTYPE, Spell.QUERY_ATK_TYPE_OPTIONS));
 
         Spinner dmgtype = filterLayout.findViewById(R.id.spellfilter_dmgtype_spinner);
         dmgtype.setAdapter(new SpellFilterAttributeSpinner(
-                getActivity(), SpellFilterController.DEFAULT_OPTION_DMGTYPE, Spell.QUERY_DMG_TYPE_OPTIONS));
+                getActivity(), SpellFilterLogic.DEFAULT_OPTION_DMGTYPE, Spell.QUERY_DMG_TYPE_OPTIONS));
 
         Spinner condition = filterLayout.findViewById(R.id.spellfilter_condition_spinner);
         condition.setAdapter(new SpellFilterAttributeSpinner(
-                getActivity(), SpellFilterController.DEFAULT_OPTION_CONDITION, Spell.QUERY_CONDITION_OPTIONS));
+                getActivity(), SpellFilterLogic.DEFAULT_OPTION_CONDITION, Spell.QUERY_CONDITION_OPTIONS));
 
         Spinner source = filterLayout.findViewById(R.id.spellfilter_source_spinner);
         source.setAdapter(new SpellFilterAttributeSpinner(
-                getActivity(), SpellFilterController.DEFAULT_OPTION_SOURCE, Spell.QUERY_SOURCE_OPTIONS));
+                getActivity(), SpellFilterLogic.DEFAULT_OPTION_SOURCE, Spell.QUERY_SOURCE_OPTIONS));
 
         Spinner spellclass = filterLayout.findViewById(R.id.spellfilter_class_spinner);
         spellclass.setAdapter(new SpellFilterAttributeSpinner(
-                getActivity(), SpellFilterController.DEFAULT_OPTION_CLASS, Spell.QUERY_CLASS_OPTIONS));
+                getActivity(), SpellFilterLogic.DEFAULT_OPTION_CLASS, Spell.QUERY_CLASS_OPTIONS));
 
         filterDialog.setView(filterLayout);
         filterDialog.setPositiveButton(R.string.general_button_search, applySearch);
@@ -145,7 +144,7 @@ public class SpellList extends Fragment {
 
     private DialogInterface.OnClickListener applySearch = new DialogInterface.OnClickListener() {
         public void onClick(DialogInterface dialog, int which) {
-            SpellFilterController filter = new SpellFilterController();
+            SpellFilterLogic filter = new SpellFilterLogic();
             filter.setSearchphrase(((EditText)filterPopup.findViewById(R.id.spellfilter_spellname)).getText().toString());
             filter.setCheckdesc(((CheckBox)filterPopup.findViewById(R.id.spellfilter_description_checkbox)).isChecked());
             filter.setCheckmats(((CheckBox)filterPopup.findViewById(R.id.spellfilter_materialtxt_checkbox)).isChecked());

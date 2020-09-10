@@ -1,7 +1,6 @@
 package ca.printf.dndb.view;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -10,15 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import androidx.appcompat.app.AlertDialog;
 import androidx.core.util.Supplier;
 import androidx.fragment.app.Fragment;
 import java.io.FileNotFoundException;
-
 import ca.printf.dndb.R;
 import ca.printf.dndb.io.DndbSQLManager;
 
-public class Settings extends Fragment {
+public class SettingsPage extends Fragment {
     private static final int FILEPICKER_RESULT = 0xF17E;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -46,7 +43,7 @@ public class Settings extends Fragment {
                     return null;
                 }
             };
-            confirmationDialog(getString(R.string.label_settings_reset_db_confim_msg), resetAction);
+            MiscDialogs.confirmationDialog(getString(R.string.label_settings_reset_db_confim_msg), resetAction, getContext());
         }
     };
 
@@ -83,18 +80,5 @@ public class Settings extends Fragment {
         dbman.onCreate(db);
         db.close();
         dbman.close();
-    }
-
-    private void confirmationDialog(String msg, final Supplier<Void> confirmAction) {
-        AlertDialog.Builder confirm = new AlertDialog.Builder(getContext());
-        confirm.setTitle(R.string.general_confirm_dialog_title);
-        confirm.setMessage(msg);
-        confirm.setNegativeButton(R.string.general_button_cancel, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {dialog.dismiss();}
-        });
-        confirm.setPositiveButton(R.string.general_button_confirm, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {confirmAction.get();}
-        });
-        confirm.create().show();
     }
 }

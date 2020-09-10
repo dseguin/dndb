@@ -30,8 +30,12 @@ public class SpellListController {
     public static void setSpellList(List<Spell> spellList) {spells = spellList;}
     public static int size() {return spells.size();}
     public static void add(Spell spell) {spells.add(spell);}
-    public static Spell get(int index) {return spells.get(index);}
     public static void sort(Comparator<Spell> c) {Collections.sort(spells, c);}
+    public static Spell get(int index) {return spells.get(index);}
+    public static Spell get(Spell spell) {
+        int index = spells.indexOf(spell);
+        return index > -1 ? spells.get(index) : null;
+    }
 
     public static void initSpells(FragmentActivity activity) {
         try {
@@ -165,20 +169,20 @@ public class SpellListController {
         Cursor row = db.rawQuery(Spell.querySpell(), null);
         Log.d("readSpellsFromDB", row.getCount() + " spells loaded");
         while(row.moveToNext()) {
-            Spell s = new Spell(row.getLong(row.getColumnIndex(stripTableFromCol(Spell.COL_ID))));
-            s.setName(row.getString(row.getColumnIndex(stripTableFromCol(Spell.COL_NAME))));
-            s.setLevel(row.getInt(row.getColumnIndex(stripTableFromCol(Spell.COL_LEVEL))));
-            s.setSchool(row.getString(row.getColumnIndex("school_" + stripTableFromCol(Spell.COL_SCHOOL))));
-            s.setCastTime(row.getString(row.getColumnIndex(stripTableFromCol(Spell.COL_CAST_TIME))));
-            s.setConcentration(row.getInt(row.getColumnIndex(stripTableFromCol(Spell.COL_CONCENTRATION))) != 0);
-            s.setRitual(row.getInt(row.getColumnIndex(stripTableFromCol(Spell.COL_RITUAL))) != 0);
-            s.setDesc(row.getString(row.getColumnIndex(stripTableFromCol(Spell.COL_DESC))));
-            s.setHigherDesc(row.getString(row.getColumnIndex(stripTableFromCol(Spell.COL_HIGHER_DESC))));
-            s.setDuration(row.getString(row.getColumnIndex(stripTableFromCol(Spell.COL_DURATION))));
-            s.setMaterials(row.getString(row.getColumnIndex(stripTableFromCol(Spell.COL_MATERIALS))));
-            s.setMaterialsCost(row.getInt(row.getColumnIndex(stripTableFromCol(Spell.COL_MATERIALS_COST))));
-            s.setRange(row.getString(row.getColumnIndex(stripTableFromCol(Spell.COL_RANGE))));
-            s.setReactionDesc(row.getString(row.getColumnIndex(stripTableFromCol(Spell.COL_REACTION_DESC))));
+            Spell s = new Spell(row.getLong(row.getColumnIndex(DndbSQLManager.stripTableFromCol(Spell.COL_ID))));
+            s.setName(row.getString(row.getColumnIndex(DndbSQLManager.stripTableFromCol(Spell.COL_NAME))));
+            s.setLevel(row.getInt(row.getColumnIndex(DndbSQLManager.stripTableFromCol(Spell.COL_LEVEL))));
+            s.setSchool(row.getString(row.getColumnIndex("school_" + DndbSQLManager.stripTableFromCol(Spell.COL_SCHOOL))));
+            s.setCastTime(row.getString(row.getColumnIndex(DndbSQLManager.stripTableFromCol(Spell.COL_CAST_TIME))));
+            s.setConcentration(row.getInt(row.getColumnIndex(DndbSQLManager.stripTableFromCol(Spell.COL_CONCENTRATION))) != 0);
+            s.setRitual(row.getInt(row.getColumnIndex(DndbSQLManager.stripTableFromCol(Spell.COL_RITUAL))) != 0);
+            s.setDesc(row.getString(row.getColumnIndex(DndbSQLManager.stripTableFromCol(Spell.COL_DESC))));
+            s.setHigherDesc(row.getString(row.getColumnIndex(DndbSQLManager.stripTableFromCol(Spell.COL_HIGHER_DESC))));
+            s.setDuration(row.getString(row.getColumnIndex(DndbSQLManager.stripTableFromCol(Spell.COL_DURATION))));
+            s.setMaterials(row.getString(row.getColumnIndex(DndbSQLManager.stripTableFromCol(Spell.COL_MATERIALS))));
+            s.setMaterialsCost(row.getInt(row.getColumnIndex(DndbSQLManager.stripTableFromCol(Spell.COL_MATERIALS_COST))));
+            s.setRange(row.getString(row.getColumnIndex(DndbSQLManager.stripTableFromCol(Spell.COL_RANGE))));
+            s.setReactionDesc(row.getString(row.getColumnIndex(DndbSQLManager.stripTableFromCol(Spell.COL_REACTION_DESC))));
             SpellListController.add(s);
         }
         row.close();
@@ -191,7 +195,7 @@ public class SpellListController {
     private static void setSpellMultivalues(Spell s, SQLiteDatabase db) {
         Cursor row = db.rawQuery(Spell.queryComponent(s.getName()), null);
         while(row.moveToNext()) {
-            String comp = row.getString(row.getColumnIndex(stripTableFromCol(Spell.COL_COMPONENT_SYMBOL)));
+            String comp = row.getString(row.getColumnIndex(DndbSQLManager.stripTableFromCol(Spell.COL_COMPONENT_SYMBOL)));
             if(comp == null || comp.isEmpty())
                 continue;
             if ("V".equals(comp)) {
@@ -205,37 +209,33 @@ public class SpellListController {
         row.close();
         row = db.rawQuery(Spell.queryTarget(s.getName()), null);
         while(row.moveToNext())
-            s.getTargets().add(row.getString(row.getColumnIndex(stripTableFromCol(Spell.COL_TARGET))));
+            s.getTargets().add(row.getString(row.getColumnIndex(DndbSQLManager.stripTableFromCol(Spell.COL_TARGET))));
         row.close();
         row = db.rawQuery(Spell.queryAbility(s.getName()), null);
         while(row.moveToNext())
-            s.getAbilitySaves().add(row.getString(row.getColumnIndex(stripTableFromCol(Spell.COL_ABILITY_SHORTNAME))));
+            s.getAbilitySaves().add(row.getString(row.getColumnIndex(DndbSQLManager.stripTableFromCol(Spell.COL_ABILITY_SHORTNAME))));
         row.close();
         row = db.rawQuery(Spell.queryAttackType(s.getName()), null);
         while(row.moveToNext())
-            s.getAtkTypes().add(row.getString(row.getColumnIndex(stripTableFromCol(Spell.COL_ATK_TYPE))));
+            s.getAtkTypes().add(row.getString(row.getColumnIndex(DndbSQLManager.stripTableFromCol(Spell.COL_ATK_TYPE))));
         row.close();
         row = db.rawQuery(Spell.queryDamageType(s.getName()), null);
         while(row.moveToNext())
-            s.getDmgTypes().add(row.getString(row.getColumnIndex(stripTableFromCol(Spell.COL_DMG_TYPE))));
+            s.getDmgTypes().add(row.getString(row.getColumnIndex(DndbSQLManager.stripTableFromCol(Spell.COL_DMG_TYPE))));
         row.close();
         row = db.rawQuery(Spell.queryCondition(s.getName()), null);
         while(row.moveToNext())
-            s.getConditions().add(row.getString(row.getColumnIndex(stripTableFromCol(Spell.COL_CONDITION))));
+            s.getConditions().add(row.getString(row.getColumnIndex(DndbSQLManager.stripTableFromCol(Spell.COL_CONDITION))));
         row.close();
         row = db.rawQuery(Spell.querySource(s.getName()), null);
         while(row.moveToNext()) {
-            s.getSources().put(row.getString(row.getColumnIndex(stripTableFromCol(Spell.COL_SOURCE_SHORTNAME))),
-                    row.getString(row.getColumnIndex(stripTableFromCol(Spell.COL_SOURCE_FULLNAME))));
+            s.getSources().put(row.getString(row.getColumnIndex(DndbSQLManager.stripTableFromCol(Spell.COL_SOURCE_SHORTNAME))),
+                    row.getString(row.getColumnIndex(DndbSQLManager.stripTableFromCol(Spell.COL_SOURCE_FULLNAME))));
         }
         row.close();
         row = db.rawQuery(Spell.queryClass(s.getName()), null);
         while(row.moveToNext())
-            s.getClasses().add(row.getString(row.getColumnIndex(stripTableFromCol(Spell.COL_CLASS))));
+            s.getClasses().add(row.getString(row.getColumnIndex(DndbSQLManager.stripTableFromCol(Spell.COL_CLASS))));
         row.close();
-    }
-
-    private static String stripTableFromCol(String col) {
-        return col.substring(col.lastIndexOf('.') + 1);
     }
 }

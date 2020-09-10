@@ -3,7 +3,7 @@ package ca.printf.dndb.logic;
 import java.util.ArrayList;
 import ca.printf.dndb.entity.Spell;
 
-public class SpellFilterController {
+public class SpellFilterLogic {
     public static final String DEFAULT_OPTION_LEVEL = "Level";
     public static final String DEFAULT_OPTION_SCHOOL = "School";
     public static final String DEFAULT_OPTION_DURATION = "Duration";
@@ -39,7 +39,7 @@ public class SpellFilterController {
     private int maxcost;
     private String range;
 
-    public SpellFilterController() {}
+    public SpellFilterLogic() {}
 
     public void execFilter() {
         ArrayList<Spell> spellsFiltered = new ArrayList<>();
