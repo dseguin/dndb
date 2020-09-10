@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment;
 import java.io.FileNotFoundException;
 import ca.printf.dndb.R;
 import ca.printf.dndb.io.DndbSQLManager;
+import ca.printf.dndb.logic.BookmarkListController;
+import ca.printf.dndb.logic.SpellListController;
 
 public class SettingsPage extends Fragment {
     private static final int FILEPICKER_RESULT = 0xF17E;
@@ -40,6 +42,8 @@ public class SettingsPage extends Fragment {
             Supplier<Void> resetAction = new Supplier<Void>() {
                 public Void get() {
                     resetDB();
+                    SpellListController.initSpells(getActivity());
+                    BookmarkListController.initBookmarks(getActivity());
                     return null;
                 }
             };

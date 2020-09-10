@@ -12,26 +12,34 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import java.util.Comparator;
 import ca.printf.dndb.R;
+import ca.printf.dndb.list.SpellListProvider;
 import ca.printf.dndb.logic.SpellFilterLogic;
 import ca.printf.dndb.logic.SpellListController;
 import ca.printf.dndb.entity.Spell;
 import ca.printf.dndb.list.SpellFilterAttributeSpinner;
 import ca.printf.dndb.list.SpellListviewAdapter;
-import ca.printf.dndb.list.SpellSortComparator;
-import ca.printf.dndb.list.SpellSortSpinner;
 
 public class SpellListPage extends Fragment {
     private SpellListviewAdapter adapter;
     private AlertDialog filterPopup;
-    private AlertDialog sortPopup;
+
+    private SpellListProvider spellProvider = new SpellListProvider() {
+        public int size() {return SpellListController.size();}
+        public Spell get(int index) {return SpellListController.get(index);}
+        public void sort(Comparator<Spell> c) {
+            SpellListController.sort(c);
+            adapter.notifyDataSetChanged();
+        }
+    };
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
     public View onCreateView(LayoutInflater li, ViewGroup v, Bundle b) {
-        adapter = new SpellListviewAdapter(getActivity().getWindow());
+        adapter = new SpellListviewAdapter(getActivity().getWindow(), spellProvider);
         View root = li.inflate(R.layout.spell_list_page, v, false);
         ListView list = root.findViewById(R.id.spells_listview);
         list.setAdapter(adapter);
@@ -56,30 +64,9 @@ public class SpellListPage extends Fragment {
 
     private View.OnClickListener sortButton = new View.OnClickListener() {
         public void onClick(View v) {
-            sortPopup = createSortDialog().create();
-            sortPopup.show();
+            MiscDialogs.spellSortDialog(spellProvider, getActivity());
         }
     };
-
-    private AlertDialog.Builder createSortDialog() {
-        AlertDialog.Builder sortDialog = new AlertDialog.Builder(getContext());
-        View sortLayout = getLayoutInflater().inflate(R.layout.spell_sort_dialog, null, false);
-        Spinner sort = sortLayout.findViewById(R.id.spellsort_spinner);
-        sort.setAdapter(new SpellSortSpinner(getContext()));
-        sortDialog.setView(sortLayout);
-        sortDialog.setNegativeButton(R.string.general_button_cancel, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {dialog.dismiss();}
-        });
-        sortDialog.setPositiveButton(R.string.general_button_sort, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                boolean reverseOrder = ((CheckBox)sortPopup.findViewById(R.id.spellsort_descending_checkbox)).isChecked();
-                String sortitem = (String)((Spinner)sortPopup.findViewById(R.id.spellsort_spinner)).getSelectedItem();
-                SpellListController.sort(new SpellSortComparator(sortitem, reverseOrder));
-                adapter.notifyDataSetChanged();
-            }
-        });
-        return sortDialog;
-    }
 
     private AlertDialog.Builder createFilterDialog() {
         AlertDialog.Builder filterDialog = new AlertDialog.Builder(getContext());

@@ -21,29 +21,45 @@ public class BookmarkListController {
     BookmarkListController() {}
     public static void setBookmarkList(List<Bookmark> bookmarkList) {bookmarks = bookmarkList;}
     public static int size() {return bookmarks.size();}
+    public static boolean isEmpty() {return bookmarks.isEmpty();}
     public static Bookmark get(int index) {return bookmarks.get(index);}
     public static void sort(Comparator<Bookmark> c) {Collections.sort(bookmarks, c);}
     public static Bookmark add(String bookmarkname, FragmentActivity activity) {
         try {
-            Bookmark bookmark = new Bookmark(insertDB(bookmarkname, activity));
+            Bookmark bookmark = new Bookmark(insertDB(CommonIO.sanitizeString(bookmarkname), activity));
             bookmark.setName(bookmarkname);
             bookmarks.add(bookmark);
             return bookmark;
         } catch (Exception e) {
             ErrorPage.errorScreen(activity.getSupportFragmentManager(),
-                    "insertDB: Error adding bookmark to database", e);
+                    "insertDB: Error adding bookmark \"" + bookmarkname + "\" to database", e);
         }
         return null;
     }
 
     public static void add(Bookmark bookmark, FragmentActivity activity) {
         try {
-            modifyDB(Bookmark.insert_new_bookmark(bookmark.getName()), activity);
+            modifyDB(Bookmark.insert_new_bookmark(CommonIO.sanitizeString(bookmark.getName())), activity);
             bookmarks.add(bookmark);
         } catch (Exception e) {
             ErrorPage.errorScreen(activity.getSupportFragmentManager(),
-                    "modifyDB: Error adding bookmark to database", e);
+                    "modifyDB: Error adding bookmark \"" + bookmark.getName() + "\" to database", e);
         }
+    }
+
+    public static void addSpell(Bookmark bookmark, Spell spell, FragmentActivity activity) {
+        try {
+            modifyDB(Bookmark.insert_bookmark_spell(bookmark.getId(), CommonIO.sanitizeString(spell.getName())), activity);
+            if(!bookmark.getSpellList().contains(spell))
+                bookmark.getSpellList().add(spell);
+        } catch (Exception e) {
+            ErrorPage.errorScreen(activity.getSupportFragmentManager(),
+                    "modifyDB: Error adding spell \"" + spell.getName() + "\" to bookmark \"" + bookmark.getName() + "\"", e);
+        }
+    }
+
+    public static void addSpell(long bookmarkid, Spell spell, FragmentActivity activity) {
+        addSpell(get(bookmarks.indexOf(new Bookmark(bookmarkid))), spell, activity);
     }
 
     public static void remove(int index, FragmentActivity activity) {
@@ -52,7 +68,7 @@ public class BookmarkListController {
             bookmarks.remove(index);
         } catch (Exception e) {
             ErrorPage.errorScreen(activity.getSupportFragmentManager(),
-                    "modifyDB: Error removing bookmark from database", e);
+                    "modifyDB: Error removing bookmark 'id=" + index + "' from database", e);
         }
     }
 

@@ -2,6 +2,7 @@ package ca.printf.dndb.view;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +41,12 @@ public class BookmarkListPage extends Fragment {
 
     private AdapterView.OnItemClickListener selectBookmark = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            // TODO: Go to bookmarked spells
+            getActivity()
+                    .getSupportFragmentManager()
+                    .beginTransaction()
+                    .addToBackStack(null)
+                    .replace(R.id.content_frame, new BookmarkPage(BookmarkListController.get(position)))
+                    .commit();
         }
     };
 
@@ -50,6 +56,7 @@ public class BookmarkListPage extends Fragment {
         final EditText textfield = new EditText(getContext());
         textfield.setGravity(Gravity.CENTER_HORIZONTAL);
         textfield.setHint(R.string.placeholder_bookmarklist_dialogadd_name);
+        textfield.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
         dlg.setView(textfield);
         dlg.setNegativeButton(R.string.general_button_cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {dialog.dismiss();}

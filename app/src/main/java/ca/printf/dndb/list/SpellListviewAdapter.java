@@ -6,19 +6,20 @@ import android.view.Window;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import ca.printf.dndb.R;
-import ca.printf.dndb.logic.SpellListController;
 import ca.printf.dndb.entity.Spell;
 
 public class SpellListviewAdapter extends BaseAdapter {
     private Window parentActivity;
+    private SpellListProvider listProvider;
 
-    public SpellListviewAdapter(Window thisActivity) {
+    public SpellListviewAdapter(Window thisActivity, SpellListProvider provider) {
         this.parentActivity = thisActivity;
+        this.listProvider = provider;
     }
 
-    public int getCount() {return SpellListController.size();}
+    public int getCount() {return listProvider.size();}
 
-    public Object getItem(int pos) {return SpellListController.get(pos);}
+    public Object getItem(int pos) {return listProvider.get(pos);}
 
     public long getItemId(int pos) {return ((Spell)getItem(pos)).getId();}
 

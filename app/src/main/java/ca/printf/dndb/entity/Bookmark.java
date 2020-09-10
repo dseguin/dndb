@@ -1,10 +1,12 @@
 package ca.printf.dndb.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import ca.printf.dndb.io.DndbSQLManager;
 
-public class Bookmark {
+public class Bookmark implements Serializable {
+    private static final long serialVersionUID = 1L;
     public static final String COL_ID = DndbSQLManager.TABLE_BOOKMARK + ".rowid";
     public static final String COL_BOOKMARK_NAME = DndbSQLManager.TABLE_BOOKMARK + ".name";
     public static final String COL_BOOKMARK_SPELL_ID = DndbSQLManager.TABLE_BOOKMARK_SPELL + ".rowid";
@@ -44,6 +46,9 @@ public class Bookmark {
     public void setId(long id) {this.id = id;}
     public void setName(String name) {this.name = name;}
     public void setSpellList(List<Spell> spellList) {this.spells = spellList;}
+    public boolean equals(Object o) {
+        return super.equals(o) || (o instanceof Bookmark && ((Bookmark)o).getId() == this.getId());
+    }
 
     public static String query_bookmark_spells(long bookmarkid) {
         return "SELECT " + COLATE_COLS(QUERY_BOOKMARK_SPELLS_COLS) + " FROM " +
@@ -92,7 +97,9 @@ public class Bookmark {
 
     public static String delete_bookmark(long id) {
         return "DELETE FROM " + DndbSQLManager.TABLE_BOOKMARK + " WHERE " +
-                DndbSQLManager.stripTableFromCol(COL_ID) + " = " + id + ";";
+                DndbSQLManager.stripTableFromCol(COL_ID) + " = " + id + ";\n" +
+                "DELETE FROM " + DndbSQLManager.TABLE_BOOKMARK_SPELL + " WHERE " +
+                DndbSQLManager.TABLE_BOOKMARK + "_id = " + id + ";";
     }
 
     private static final String COLATE_COLS(final String[] COLS) {

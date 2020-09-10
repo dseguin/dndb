@@ -101,4 +101,7 @@
     <string name="label_bookmarklistitem_delete_msg">Are you sure you want to delete this bookmark?</string>
     <string name="label_bookmarklist_dialogadd_title">Create a new bookmark</string>
     <string name="placeholder_bookmarklist_dialogadd_name">Offensive/Utility</string>
+    <string name="spells_btn_addtobookmark">Bookmark</string>
+    <string name="label_spell_addtobookmark_title">Add to bookmark</string>
+    <string name="label_spell_addtobookmark_nobookmarkmsg">You don\'t have any bookmarks!</string>
 </resources>

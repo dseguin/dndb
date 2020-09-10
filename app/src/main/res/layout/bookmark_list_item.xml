@@ -27,6 +27,7 @@
             android:background="@android:drawable/toast_frame"
             app:backgroundTint="@color/colorAccent"
             android:text="@string/label_bookmarklistitem_delete_btn"
+            android:focusable="false"
             android:id="@+id/bookmarklistitem_delete_btn"/>
     </LinearLayout>
     <View
