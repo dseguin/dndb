@@ -104,4 +104,5 @@
     <string name="spells_btn_addtobookmark">Bookmark</string>
     <string name="label_spell_addtobookmark_title">Add to bookmark</string>
     <string name="label_spell_addtobookmark_nobookmarkmsg">You don\'t have any bookmarks!</string>
+    <string name="label_bookmarkitem_delete_msg">Are you sure you want to remove this spell from this bookmark?</string>
 </resources>

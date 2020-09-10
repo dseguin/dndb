@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import androidx.core.util.Supplier;
 import androidx.fragment.app.Fragment;
 import java.util.Collections;
 import java.util.Comparator;
@@ -14,6 +15,7 @@ import ca.printf.dndb.entity.Bookmark;
 import ca.printf.dndb.entity.Spell;
 import ca.printf.dndb.list.SpellListProvider;
 import ca.printf.dndb.list.SpellListviewAdapter;
+import ca.printf.dndb.logic.BookmarkListController;
 
 public class BookmarkPage extends Fragment {
     private static final String PREV_BOOKMARK = "prev_bookmark";
@@ -39,6 +41,20 @@ public class BookmarkPage extends Fragment {
         }
     };
 
+    private AdapterView.OnItemLongClickListener spellLongClick = new AdapterView.OnItemLongClickListener() {
+        public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+            Supplier<Void> deleteSpellBookmark = new Supplier<Void>() {
+                public Void get() {
+                    BookmarkListController.removeSpell(bookmark, bookmark.getSpellList().get(position), getActivity());
+                    adapter.notifyDataSetChanged();
+                    return null;
+                }
+            };
+            MiscDialogs.confirmationDialog(R.string.label_bookmarkitem_delete_msg, deleteSpellBookmark, getContext());
+            return true;
+        }
+    };
+
     public BookmarkPage() {}
     public BookmarkPage(Bookmark bookmark) {
         this.bookmark = bookmark;
@@ -61,6 +77,7 @@ public class BookmarkPage extends Fragment {
         View v = li.inflate(R.layout.spell_list_page, vg, false);
         ListView list = v.findViewById(R.id.spells_listview);
         list.setAdapter(adapter);
+        list.setOnItemLongClickListener(spellLongClick);
         list.setOnItemClickListener(spellSelection);
         v.findViewById(R.id.spells_btn_filter_spells).setVisibility(View.GONE);
         v.findViewById(R.id.spells_btn_sort_spells).setOnClickListener(sortbtn);

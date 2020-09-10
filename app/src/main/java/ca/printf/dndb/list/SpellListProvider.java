@@ -4,7 +4,7 @@ import java.util.Comparator;
 import ca.printf.dndb.entity.Spell;
 
 public interface SpellListProvider {
-    public int size();
-    public Spell get(int index);
-    public void sort(Comparator<Spell> c);
+    int size();
+    Spell get(int index);
+    void sort(Comparator<Spell> c);
 }

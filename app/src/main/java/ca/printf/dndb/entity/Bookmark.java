@@ -54,7 +54,7 @@ public class Bookmark implements Serializable {
         return "SELECT " + COLATE_COLS(QUERY_BOOKMARK_SPELLS_COLS) + " FROM " +
                 DndbSQLManager.TABLE_BOOKMARK + " " + JOIN_BOOKMARK_SPELL + " WHERE " +
                 DndbSQLManager.TABLE_BOOKMARK_SPELL + "." + DndbSQLManager.TABLE_BOOKMARK +
-                "_id = " + bookmarkid + ";";
+                "_id = " + bookmarkid + " ORDER BY " + Spell.COL_NAME + ";";
     }
 
     public static String insert_bookmark_spell(String bookmarkname, String spellname) {

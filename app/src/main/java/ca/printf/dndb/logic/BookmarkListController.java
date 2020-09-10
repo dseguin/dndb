@@ -85,6 +85,20 @@ public class BookmarkListController {
         return ret;
     }
 
+    public static void removeSpell(Bookmark bookmark, Spell spell, FragmentActivity activity) {
+        try {
+            modifyDB(Bookmark.delete_bookmark_spell(bookmark.getId(), CommonIO.sanitizeString(spell.getName())), activity);
+            bookmark.getSpellList().remove(spell);
+        } catch (Exception e) {
+            ErrorPage.errorScreen(activity.getSupportFragmentManager(),
+                    "modifyDB: Error removing spell \"" + spell.getName() + "\" from bookmark \"" + bookmark.getName() + "\"", e);
+        }
+    }
+
+    public static void removeSpell(long bookmarkid, Spell spell, FragmentActivity activity) {
+        removeSpell(get(bookmarks.indexOf(new Bookmark(bookmarkid))), spell, activity);
+    }
+
     private static long insertDB(String bookmarkname, FragmentActivity a) {
         DndbSQLManager dbman = new DndbSQLManager(a);
         SQLiteDatabase db = dbman.getWritableDatabase();
