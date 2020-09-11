@@ -26,7 +26,7 @@ public class BookmarkListController {
     public static void sort(Comparator<Bookmark> c) {Collections.sort(bookmarks, c);}
     public static Bookmark add(String bookmarkname, FragmentActivity activity) {
         try {
-            Bookmark bookmark = new Bookmark(insertDB(CommonIO.sanitizeString(bookmarkname), activity));
+            Bookmark bookmark = new Bookmark(insertDB(bookmarkname, activity));
             bookmark.setName(bookmarkname);
             bookmarks.add(bookmark);
             return bookmark;
